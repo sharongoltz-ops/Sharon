@@ -1,0 +1,1920 @@
+competitive_analysis_bond_vs_atlar<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bond Treasury vs Atlar - Competitive Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #001a4d 0%, #002966 100%);
+            color: white;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        /* Navigation — compact dropdown style */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            background: white;
+            border-bottom: 2px solid #e0e4e8;
+            padding: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: stretch;
+            padding: 0;
+        }
+
+        /* Top-level nav groups */
+        .nav-group {
+            position: relative;
+        }
+
+        .nav-group-label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #001a4d;
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            white-space: nowrap;
+            transition: background 0.2s;
+            font-family: inherit;
+        }
+
+        .nav-group-label:hover,
+        .nav-group:hover .nav-group-label {
+            background-color: #f0f2f5;
+            color: #0033cc;
+        }
+
+        .nav-group-label .arrow {
+            font-size: 0.55rem;
+            transition: transform 0.2s;
+        }
+
+        .nav-group:hover .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Dropdown panel */
+        .nav-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid #e0e4e8;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            min-width: 210px;
+            padding: 6px 0;
+            z-index: 200;
+        }
+
+        .nav-group:hover .nav-dropdown {
+            display: block;
+        }
+
+        .nav-link {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.85rem;
+            padding: 0.45rem 1rem;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            background-color: #f0f4ff;
+            color: #0033cc;
+        }
+
+        /* Direct (non-grouped) nav links at top level */
+        .nav-direct {
+            display: flex;
+            align-items: center;
+            color: #001a4d;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 0.75rem 1rem;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+
+        .nav-direct:hover {
+            background-color: #f0f2f5;
+            color: #0033cc;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Section Styles */
+        section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #001a4d;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #0066ff;
+            font-weight: 700;
+        }
+
+        .subsection-title {
+            font-size: 1.4rem;
+            color: #001a4d;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        /* Executive Summary */
+        .summary-box {
+            background: linear-gradient(135deg, #f5f7ff 0%, #e8ebf7 100%);
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid #0066ff;
+            margin-bottom: 2rem;
+        }
+
+        .summary-box p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        /* Company Profiles */
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid #0066ff;
+        }
+
+        .profile-card:nth-child(2) {
+            border-top-color: #00cc88;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .profile-card h3 {
+            font-size: 1.5rem;
+            color: #001a4d;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .profile-item {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .profile-label {
+            font-weight: 600;
+            color: #001a4d;
+            min-width: 130px;
+        }
+
+        .profile-value {
+            color: #555;
+            flex: 1;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: #f0f2f5;
+            color: #001a4d;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+        }
+
+        .badge.green {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .badge.blue {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .badge.gold {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #001a4d 0%, #002966 100%);
+            color: white;
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e4e8;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tbody tr:hover {
+            background-color: #f0f2f5;
+            transition: background-color 0.2s ease;
+        }
+
+        /* Rating Indicators — fixed-size CSS circles */
+        .rating-strong,
+        .rating-adequate,
+        .rating-weak,
+        .rating-absent {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            vertical-align: middle;
+            flex-shrink: 0;
+            font-size: 0;       /* hide the unicode text fallback */
+            line-height: 0;
+        }
+
+        .rating-strong {
+            background-color: #00cc88;
+        }
+
+        .rating-adequate {
+            background-color: #ffaa00;
+        }
+
+        .rating-weak {
+            background: transparent;
+            border: 2.5px solid #ff4444;
+        }
+
+        .rating-absent {
+            background: transparent;
+            border: 2.5px dashed #bbb;
+        }
+
+        .rating-text {
+            margin-left: 0.5rem;
+            display: inline-block;
+            font-size: 0.9rem;
+            vertical-align: middle;
+        }
+
+        /* Feature Category */
+        .feature-category {
+            background-color: #f5f7ff;
+            font-weight: 600;
+            color: #001a4d;
+        }
+
+        /* AI Section */
+        .ai-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #0066ff;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .ai-section:nth-child(even) {
+            border-left-color: #00cc88;
+        }
+
+        .ai-section h4 {
+            color: #001a4d;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .ai-label {
+            display: inline-block;
+            background-color: #0066ff;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .ai-section:nth-child(even) .ai-label {
+            background-color: #00cc88;
+        }
+
+        .ai-workflow {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+            border-left: 3px solid #e0e4e8;
+        }
+
+        .ai-workflow h5 {
+            color: #001a4d;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .ai-workflow p {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Positioning Map */
+        .positioning-map {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        .map-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            margin-top: 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+            border: 1px solid #e0e4e8;
+            border-radius: 8px;
+        }
+
+        .axis {
+            position: absolute;
+            background-color: #333;
+        }
+
+        .axis-x {
+            width: 80%;
+            height: 2px;
+            top: 50%;
+            left: 10%;
+        }
+
+        .axis-y {
+            width: 2px;
+            height: 80%;
+            top: 10%;
+            left: 50%;
+        }
+
+        .axis-label {
+            position: absolute;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #333;
+        }
+
+        .x-label-left {
+            bottom: -30px;
+            left: 10%;
+        }
+
+        .x-label-right {
+            bottom: -30px;
+            right: 10%;
+        }
+
+        .y-label-bottom {
+            bottom: 10%;
+            left: -120px;
+            width: 100px;
+            text-align: right;
+        }
+
+        .y-label-top {
+            top: 10%;
+            left: -120px;
+            width: 100px;
+            text-align: right;
+        }
+
+        .company-dot {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .company-dot:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .dot-bond {
+            background: linear-gradient(135deg, #0066ff 0%, #004db3 100%);
+            top: 15%;
+            right: 12%;
+        }
+
+        .dot-atlar {
+            background: linear-gradient(135deg, #00cc88 0%, #009966 100%);
+            top: 25%;
+            left: 25%;
+        }
+
+        .dot-kyriba {
+            background: linear-gradient(135deg, #ff6b6b 0%, #cc5555 100%);
+            top: 45%;
+            right: 20%;
+            opacity: 0.6;
+        }
+
+        .dot-gtreasury {
+            background: linear-gradient(135deg, #ffa500 0%, #cc8400 100%);
+            top: 50%;
+            left: 30%;
+            opacity: 0.6;
+        }
+
+        .dot-trovata {
+            background: linear-gradient(135deg, #9966ff 0%, #7744cc 100%);
+            top: 45%;
+            left: 15%;
+            opacity: 0.6;
+        }
+
+        /* Strategic Implications */
+        .implications-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .implication-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .implication-card h4 {
+            color: #001a4d;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .implication-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .implication-card li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .implication-card li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #0066ff;
+            font-weight: 700;
+        }
+
+        .implication-card:nth-child(2n) li:before {
+            color: #00cc88;
+        }
+
+        /* Key Takeaways */
+        .takeaways {
+            background: linear-gradient(135deg, #001a4d 0%, #002966 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .takeaways h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .takeaways ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .takeaways li {
+            margin-bottom: 1.2rem;
+            padding-left: 2rem;
+            position: relative;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .takeaways li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #00cc88;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 1px solid #e0e4e8;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .profiles-grid,
+            .implications-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-container {
+                flex-wrap: wrap;
+            }
+
+            .nav-group-label,
+            .nav-direct {
+                font-size: 0.8rem;
+                padding: 0.6rem 0.75rem;
+            }
+
+            .nav-dropdown {
+                position: fixed;
+                left: 1rem;
+                right: 1rem;
+                min-width: unset;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 0.75rem;
+            }
+
+            .map-container {
+                height: 350px;
+            }
+
+            .company-dot {
+                width: 60px;
+                height: 60px;
+                font-size: 0.65rem;
+            }
+
+            .y-label-bottom,
+            .y-label-top {
+                left: -100px;
+                width: 90px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Visual Product Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .subsection-divider {
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #e0e4e8;
+        }
+
+        .subsection-divider h3 {
+            font-size: 1.3rem;
+            color: #001a4d;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .subsection-divider p {
+            color: #666;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .gallery-card {
+            background: white;
+            border: 1px solid #e0e4e8;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .gallery-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .gallery-image-wrapper {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+
+        .gallery-image-placeholder img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .gallery-image-placeholder .placeholder-text {
+            color: white;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 1rem;
+            font-weight: 500;
+        }
+
+        .gallery-card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .gallery-card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #001a4d;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-card-description {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        .gallery-card-link {
+            color: #0066ff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .gallery-card-link:hover {
+            color: #004db3;
+            gap: 0.75rem;
+        }
+
+        /* Bond Cards */
+        .gallery-card.bond-card {
+            border-color: #2d2d2d;
+        }
+
+        .gallery-card.bond-card .gallery-image-wrapper {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+
+        .gallery-card.bond-card .gallery-card-title {
+            color: #001a4d;
+        }
+
+        .gallery-card.bond-card .gallery-card-link {
+            color: #00cc88;
+        }
+
+        .gallery-card.bond-card .gallery-card-link:hover {
+            color: #009966;
+        }
+
+        /* Atlar Cards */
+        .gallery-card.atlar-card {
+            border-color: #d4c5f9;
+            background: #fafbff;
+        }
+
+        .gallery-card.atlar-card .gallery-card-title {
+            color: #001a4d;
+        }
+
+        .gallery-card.atlar-card .gallery-card-link {
+            color: #6C5CE7;
+        }
+
+        .gallery-card.atlar-card .gallery-card-link:hover {
+            color: #5544bb;
+        }
+
+        /* Print Styles */
+        @media print {
+            .sticky-nav {
+                position: static;
+            }
+
+            section {
+                page-break-inside: avoid;
+                margin-bottom: 2rem;
+            }
+
+            .profile-card,
+            .ai-section,
+            .implication-card,
+            .gallery-card {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Bond Treasury vs Atlar</h1>
+        <p>Competitive Analysis of AI-Native Treasury Management Platforms</p>
+    </div>
+
+    <!-- Sticky Navigation -->
+    <div class="sticky-nav">
+        <div class="nav-container">
+            <a href="#executive-summary" class="nav-direct">Summary</a>
+            <a href="#profiles" class="nav-direct">Profiles</a>
+
+            <div class="nav-group">
+                <button class="nav-group-label">Analysis <span class="arrow">▼</span></button>
+                <div class="nav-dropdown">
+                    <a href="#features" class="nav-link">Feature Comparison</a>
+                    <a href="#ai" class="nav-link">AI Capabilities</a>
+                    <a href="#ai-comparison" class="nav-link">AI Workflow Comparison</a>
+                    <a href="#positioning" class="nav-link">Positioning Map</a>
+                </div>
+            </div>
+
+            <div class="nav-group">
+                <button class="nav-group-label">Insights <span class="arrow">▼</span></button>
+                <div class="nav-dropdown">
+                    <a href="#implications" class="nav-link">Strategic Implications</a>
+                    <a href="#takeaways" class="nav-link">Key Takeaways</a>
+                    <a href="#gallery" class="nav-link">Visual Gallery</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Executive Summary -->
+        <section id="executive-summary">
+            <h2 class="section-title">Executive Summary</h2>
+            <div class="summary-box">
+                <p>
+                    <strong>Bond Treasury</strong> and <strong>Atlar</strong> represent the new generation of AI-native treasury management platforms, each targeting distinct market segments with fundamentally different architectural approaches. Both platforms position themselves as complete departures from legacy treasury management systems (TMS), emphasizing AI-native architecture as the core differentiator.
+                </p>
+                <p style="margin-top: 1rem;">
+                    <strong>Bond Treasury</strong> targets large multinational enterprises (S&P 500, NYSE, FTSE-listed companies) with sophisticated treasury operations. The platform emphasizes <strong>autonomous, 24/7 operations</strong> through agentic AI that handles complex dealing, risk management, and cash positioning with minimal human oversight.
+                </p>
+                <p style="margin-top: 1rem;">
+                    <strong>Atlar</strong> targets fast-scaling mid-market and enterprise companies seeking rapid deployment and productivity gains. The platform emphasizes <strong>augmented intelligence</strong>—AI that accelerates human decision-making—with transparent, privacy-preserving workflows and rapid implementation timelines. Atlar has achieved #1 G2 rankings for usability, support quality, and likelihood to recommend.
+                </p>
+            </div>
+        </section>
+
+        <!-- Company Profiles -->
+        <section id="profiles">
+            <h2 class="section-title">Company Profiles</h2>
+            <div class="profiles-grid">
+                <!-- Bond Treasury -->
+                <div class="profile-card">
+                    <h3>Bond Financial Technologies Ltd</h3>
+                    <div class="profile-item">
+                        <span class="profile-label">Headquarters:</span>
+                        <span class="profile-value">London, UK (+ New York)</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">CEO:</span>
+                        <span class="profile-value">Marcus Strych</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Founded:</span>
+                        <span class="profile-value">~2018-2019 (pre-Series A)</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Funding:</span>
+                        <span class="profile-value">$32M Series A (2020) led by Coatue. Investors include Goldman Sachs, Mastercard, Canaan, B Capital, and John Mack</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Regulation:</span>
+                        <span class="profile-value"><span class="badge blue">FCA Regulated</span> via Talbot Capital Limited (FCA #989936)</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Target Market:</span>
+                        <span class="profile-value">S&P 500, NYSE, FTSE-listed multinational enterprises</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Positioning:</span>
+                        <span class="profile-value">
+                            <span class="badge">AI-Native Treasury Management</span>
+                            <span class="badge">Enterprise</span>
+                            <span class="badge">Autonomous Operations</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Atlar -->
+                <div class="profile-card">
+                    <h3>Atlar</h3>
+                    <div class="profile-item">
+                        <span class="profile-label">Headquarters:</span>
+                        <span class="profile-value">Stockholm, Sweden</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">CEO:</span>
+                        <span class="profile-value">Joel Nordström (co-founders: Joel Wägmark, Johannes Elgh)</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Founded:</span>
+                        <span class="profile-value">2022</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Funding:</span>
+                        <span class="profile-value">€5M Seed (2022) led by Index Ventures. Other investors: La Famiglia VC, Cocoa VC</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Scale:</span>
+                        <span class="profile-value">€450B+ annualized transaction volume, 88 markets</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Target Market:</span>
+                        <span class="profile-value">Fast-scaling mid-market and enterprise finance teams</span>
+                    </div>
+                    <div class="profile-item">
+                        <span class="profile-label">Recognition:</span>
+                        <span class="profile-value">
+                            <span class="badge green">#1 G2 Usability</span>
+                            <span class="badge green">#1 G2 Support Quality</span>
+                            <span class="badge green">#1 G2 Likelihood to Recommend</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Comparison -->
+        <section id="features">
+            <h2 class="section-title">Product & Feature Comparison Matrix</h2>
+            <p style="margin-bottom: 1.5rem; color: #666;">
+                <strong>Rating Scale:</strong>
+                <span class="rating-strong">●</span> <span class="rating-text">Strong</span>
+                <span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span>
+                <span class="rating-weak">○</span> <span class="rating-text">Weak</span>
+                <span class="rating-absent">—</span> <span class="rating-text">Absent</span>
+            </p>
+
+            <!-- Cash Management Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Cash Management</th>
+                        <th style="width: 30%;">Bond Treasury</th>
+                        <th style="width: 30%;">Atlar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="feature-category">
+                        <td colspan="3">Core Capabilities</td>
+                    </tr>
+                    <tr>
+                        <td>Real-time cash visibility</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>Automated cash pooling & sweeps</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>Multi-entity consolidation</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>Intercompany flow management</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Payment Management Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Payment Management</th>
+                        <th style="width: 30%;">Bond Treasury</th>
+                        <th style="width: 30%;">Atlar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="feature-category">
+                        <td colspan="3">Payment Execution & Automation</td>
+                    </tr>
+                    <tr>
+                        <td>Payment automation</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>Multi-currency payments</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>ERP-synced payment runs</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>API-based programmatic payments</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>Approval workflows (4-eyes, multi-level)</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Forecasting & Analytics Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Forecasting & Analytics</th>
+                        <th style="width: 30%;">Bond Treasury</th>
+                        <th style="width: 30%;">Atlar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="feature-category">
+                        <td colspan="3">Predictive & Analytical Capabilities</td>
+                    </tr>
+                    <tr>
+                        <td>Cash flow forecasting</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>ML-based forecasting models</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>Real-time analytics dashboards</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>Variance analysis</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>Dynamic report generation</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Investment & Dealing Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Investment & Dealing</th>
+                        <th style="width: 30%;">Bond Treasury</th>
+                        <th style="width: 30%;">Atlar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="feature-category">
+                        <td colspan="3">Trading & Investment Capabilities</td>
+                    </tr>
+                    <tr>
+                        <td>Dealing room / trade execution</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>Money market fund access</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>Fixed-income securities</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-weak">○</span> <span class="rating-text">Weak</span></td>
+                    </tr>
+                    <tr>
+                        <td>FX products</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-weak">○</span> <span class="rating-text">Weak</span></td>
+                    </tr>
+                    <tr>
+                        <td>Repo / reverse repo</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-absent">—</span> <span class="rating-text">Absent</span></td>
+                    </tr>
+                    <tr>
+                        <td>Investment platform integrations</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span> (TreasurySpring, Morgan Money, GS Mosaic, ICD)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Risk Management Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Risk Management</th>
+                        <th style="width: 30%;">Bond Treasury</th>
+                        <th style="width: 30%;">Atlar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="feature-category">
+                        <td colspan="3">Risk Monitoring & Controls</td>
+                    </tr>
+                    <tr>
+                        <td>Counterparty risk monitoring</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                    </tr>
+                    <tr>
+                        <td>FX risk management</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-weak">○</span> <span class="rating-text">Weak</span></td>
+                    </tr>
+                    <tr>
+                        <td>Credit exposure tracking</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                    </tr>
+                    <tr>
+                        <td>Stress testing & scenario analysis</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-weak">○</span> <span class="rating-text">Weak</span></td>
+                    </tr>
+                    <tr>
+                        <td>24/7 autonomous risk monitoring</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-weak">○</span> <span class="rating-text">Weak</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Bank Reconciliation Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Bank Reconciliation</th>
+                        <th style="width: 30%;">Bond Treasury</th>
+                        <th style="width: 30%;">Atlar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="feature-category">
+                        <td colspan="3">Reconciliation & Matching</td>
+                    </tr>
+                    <tr>
+                        <td>Automated reconciliation</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>AI-assisted matching</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>ERP sync for reconciliation</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Integrations & Connectivity Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Integrations & Connectivity</th>
+                        <th style="width: 30%;">Bond Treasury</th>
+                        <th style="width: 30%;">Atlar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="feature-category">
+                        <td colspan="3">Integration Capabilities</td>
+                    </tr>
+                    <tr>
+                        <td>SWIFT</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>H2H / EBICS</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>Open banking APIs</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>ERP integrations (SAP, NetSuite, D365, Workday)</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>Developer API</td>
+                        <td><span class="rating-weak">○</span> <span class="rating-text">Weak</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>Pre-built bank connections</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span> (40+ banks)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Compliance & Security Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Compliance & Security</th>
+                        <th style="width: 30%;">Bond Treasury</th>
+                        <th style="width: 30%;">Atlar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="feature-category">
+                        <td colspan="3">Security & Regulatory</td>
+                    </tr>
+                    <tr>
+                        <td>Audit trails</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>Role-based access control</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>ISO 27001 certification</td>
+                        <td><span class="rating-absent">—</span> <span class="rating-text">Absent</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>GDPR compliance</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>DORA compliance</td>
+                        <td><span class="rating-absent">—</span> <span class="rating-text">Absent</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>SSO / MFA</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Implementation & Support Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Implementation & Support</th>
+                        <th style="width: 30%;">Bond Treasury</th>
+                        <th style="width: 30%;">Atlar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="feature-category">
+                        <td colspan="3">Deployment & Customer Success</td>
+                    </tr>
+                    <tr>
+                        <td>Average go-live time</td>
+                        <td><span class="rating-weak">○</span> <span class="rating-text">6+ months (typical enterprise)</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">&lt;90 days</span></td>
+                    </tr>
+                    <tr>
+                        <td>Managed implementation</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Strong</span></td>
+                    </tr>
+                    <tr>
+                        <td>Self-serve onboarding</td>
+                        <td><span class="rating-absent">—</span> <span class="rating-text">Absent</span></td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Adequate</span></td>
+                    </tr>
+                    <tr>
+                        <td>G2 / Third-party validation</td>
+                        <td><span class="rating-absent">—</span> <span class="rating-text">Not rated</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">#1 in 3 categories (Spring 2025)</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- AI Capabilities Deep Dive -->
+        <section id="ai">
+            <h2 class="section-title">AI Capabilities Deep Dive</h2>
+            <p style="margin-bottom: 2rem; color: #666; font-size: 1.05rem;">
+                The AI architecture and approach fundamentally differentiate these platforms. Bond emphasizes autonomous, agentic AI, while Atlar emphasizes augmented intelligence with transparency and privacy controls.
+            </p>
+
+            <!-- Bond Treasury AI -->
+            <div class="ai-section">
+                <h4>Bond Treasury AI</h4>
+                <span class="ai-label">AGENTIC AI ARCHITECTURE</span>
+
+                <p style="margin-bottom: 1rem; color: #555; line-height: 1.8;">
+                    <strong>Core Philosophy:</strong> Bond is built from the ground up on AI foundations. The "AI-native" architecture means AI intelligence spans the entire platform—not bolted onto legacy systems. Agentic AI is deployed to handle treasury operations autonomously with minimal human oversight, operating 24/7.
+                </p>
+
+                <div class="subsection-title" style="margin-top: 2rem; margin-bottom: 1rem;">Specific AI Workflows</div>
+
+                <div class="ai-workflow">
+                    <h5>1. Autonomous Cash Positioning</h5>
+                    <p>AI agents gather balances from banks and ERPs, calculate daily positions, factor in incoming and outgoing payments, and provide CFOs real-time liquidity views without spreadsheets or manual intervention.</p>
+                </div>
+
+                <div class="ai-workflow">
+                    <h5>2. Intelligent Stress Testing & Auto-Hedging</h5>
+                    <p>Background simulations continuously stress-test cash positions, FX exposures, and market scenarios. When thresholds are breached, AI proposes or auto-executes hedging adjustments to protect treasury positions.</p>
+                </div>
+
+                <div class="ai-workflow">
+                    <h5>3. Smart Reconciliation</h5>
+                    <p>Automated matching and discrepancy identification reduce reconciliation time and eliminate manual errors across multi-entity environments.</p>
+                </div>
+
+                <div class="ai-workflow">
+                    <h5>4. Generative AI Insight Agents</h5>
+                    <p>AI highlights data patterns, outliers, and anomalies. Provides context-aware recommendations to treasury teams based on historical patterns and market conditions.</p>
+                </div>
+
+                <div class="ai-workflow">
+                    <h5>5. Autonomous Risk Monitoring</h5>
+                    <p>24/7 counterparty risk assessment, credit exposure monitoring, and automatic alerts. AI continuously monitors credit ratings, market moves, and exposure thresholds without human triggers.</p>
+                </div>
+
+                <div class="ai-workflow">
+                    <h5>6. Predictive Forecasting</h5>
+                    <p>ML-driven pattern recognition in cash flows with variance analysis. AI learns from historical data to predict future cash positions with increasing accuracy.</p>
+                </div>
+
+                <p style="margin-top: 2rem; color: #666; font-style: italic; border-top: 1px solid #e0e4e8; padding-top: 1rem;">
+                    <strong>AI Maturity Assessment:</strong> Bond claims deep agentic capabilities but provides limited public evidence, case studies, or detailed technical disclosure. The emphasis on "autonomous" and "24/7" operations is compelling but lacks transparency regarding model type, training data, or specific use case validations. No disclosure of data privacy safeguards for customer data used in AI models.
+                </p>
+            </div>
+
+            <!-- Atlar AI -->
+            <div class="ai-section">
+                <h4>Atlar Intelligence (AI Layer)</h4>
+                <span class="ai-label">AUGMENTED INTELLIGENCE</span>
+
+                <p style="margin-bottom: 1rem; color: #555; line-height: 1.8;">
+                    <strong>Core Philosophy:</strong> Atlar's AI layer is built directly into the platform, combining conversational AI with complete, up-to-date financial data. AI is designed to <strong>augment and accelerate human decision-making</strong> rather than replace it. Focus is on making treasury data instantly accessible and actionable to finance teams.
+                </p>
+
+                <div class="subsection-title" style="margin-top: 2rem; margin-bottom: 1rem;">Specific AI Workflows</div>
+
+                <div class="ai-workflow">
+                    <h5>1. AI-Powered Bank Reconciliation</h5>
+                    <p>Automated matching, verification, and closing across all banks and entities. AI-assisted matching prevents mismatches and resolves discrepancies proactively. Reconciliation teams can focus on exceptions rather than routine matching.</p>
+                </div>
+
+                <div class="ai-workflow">
+                    <h5>2. Conversational AI Assistant</h5>
+                    <p>Natural language queries for treasury data. Users ask questions like "What's our EUR cash position across all entities?" and Atlar consolidates results, analyzes changes, and explains findings in seconds—without building spreadsheets or SQL queries.</p>
+                </div>
+
+                <div class="ai-workflow">
+                    <h5>3. ML-Based Cash Flow Forecasting</h5>
+                    <p>Multiple forecasting methods available: simple growth adjustments, regression analysis, and machine learning. Turns historical data into adaptive forecasts in seconds. Users can select the right model for their business.</p>
+                </div>
+
+                <div class="ai-workflow">
+                    <h5>4. Dynamic Treasury Reporting</h5>
+                    <p>AI generates reports instantly and applies the right visualizations automatically. Surfaces insights from variance analysis to cash flow bridges. Reports are contextual and adapted to user role and needs.</p>
+                </div>
+
+                <div class="ai-workflow">
+                    <h5>5. Operational Guidance</h5>
+                    <p>Contextual AI guidance for reconciling accounts, running payment batches, and connecting new banks. Reduces onboarding friction and accelerates team productivity.</p>
+                </div>
+
+                <div class="ai-workflow">
+                    <h5>6. Change Detection & Analysis</h5>
+                    <p>Automatically detects trends and identifies drivers of financial changes. Provides contextual explanations for why cash positions or forecasts moved—surfacing root causes instantly.</p>
+                </div>
+
+                <div class="subsection-title" style="margin-top: 2rem; margin-bottom: 1rem;">AI Security & Privacy (Atlar Intelligence)</div>
+                <ul style="padding-left: 1.5rem; color: #555; line-height: 1.8;">
+                    <li><strong>Data Access Control:</strong> AI cannot retrieve data users don't have access to. Respects existing role-based permissions.</li>
+                    <li><strong>No Training on Customer Data:</strong> Customer data is NEVER used to train or fine-tune Atlar Intelligence models.</li>
+                    <li><strong>EU Data Processing:</strong> All processing runs on AWS in Europe. Customer data never leaves Atlar's environment.</li>
+                    <li><strong>Role-Based AI Access:</strong> AI access controls mirror user permissions—admins, not users, define what data AI can query.</li>
+                </ul>
+
+                <p style="margin-top: 2rem; color: #666; font-style: italic; border-top: 1px solid #e0e4e8; padding-top: 1rem;">
+                    <strong>AI Maturity Assessment:</strong> Atlar Intelligence is more transparent about capabilities and limitations. The platform launched AI as a named product with clear use cases. Focus is on practical, day-to-day treasury workflows rather than autonomous operation. Privacy and security are explicitly addressed—a significant advantage for regulated financial institutions. More documented with specific use cases and customer stories.
+                </p>
+            </div>
+
+            <!-- AI Workflow Comparison Table -->
+            <h3 id="ai-comparison" class="subsection-title">AI Workflow Comparison</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 35%;">AI Capability</th>
+                        <th style="width: 32.5%;">Bond Treasury</th>
+                        <th style="width: 32.5%;">Atlar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="font-weight: 600; color: #001a4d;">AI Architecture</td>
+                        <td>Agentic (autonomous agents)</td>
+                        <td>Augmented intelligence (AI-assisted)</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600; color: #001a4d;">Conversational AI Assistant</td>
+                        <td><span class="rating-absent">—</span> <span class="rating-text">Not explicitly documented</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Natural language queries for treasury data</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600; color: #001a4d;">Autonomous Cash Positioning</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Claimed core capability</span></td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Real-time visibility, not fully autonomous</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600; color: #001a4d;">AI Reconciliation</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Basic automation</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Core feature with AI-assisted matching</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600; color: #001a4d;">ML Forecasting</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Claimed capability</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Multiple ML methods available</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600; color: #001a4d;">Auto Stress Testing & Hedging</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Unique differentiator (claimed)</span></td>
+                        <td><span class="rating-absent">—</span> <span class="rating-text">Not available</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600; color: #001a4d;">AI Report Generation</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Basic analytics</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Dynamic report generation with insights</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600; color: #001a4d;">Operational AI Guidance</td>
+                        <td><span class="rating-absent">—</span> <span class="rating-text">Not positioned</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Contextual guidance for treasury workflows</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600; color: #001a4d;">Change/Trend Detection</td>
+                        <td><span class="rating-adequate">◐</span> <span class="rating-text">Pattern recognition</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Automated detection with explanations</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600; color: #001a4d;">AI Data Privacy Controls</td>
+                        <td><span class="rating-weak">○</span> <span class="rating-text">Not detailed</span></td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Comprehensive (no customer data training)</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600; color: #001a4d;">24/7 Autonomous Operations</td>
+                        <td><span class="rating-strong">●</span> <span class="rating-text">Core positioning claim</span></td>
+                        <td><span class="rating-weak">○</span> <span class="rating-text">Not positioned as autonomous</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Positioning Map -->
+        <section id="positioning">
+            <h2 class="section-title">Market Positioning Map</h2>
+            <p style="margin-bottom: 1.5rem; color: #666; font-size: 1.05rem;">
+                Bond and Atlar occupy distinct positions in the treasury management landscape. The map below shows positioning across two key dimensions: market segment (SMB/Mid-Market vs. Large Enterprise) and operational maturity (Traditional/Manual vs. AI-Native/Autonomous).
+            </p>
+
+            <div class="positioning-map">
+                <div class="map-container">
+                    <!-- Axes -->
+                    <div class="axis axis-x"></div>
+                    <div class="axis axis-y"></div>
+
+                    <!-- Axis Labels -->
+                    <div class="axis-label x-label-left">SMB / Mid-Market</div>
+                    <div class="axis-label x-label-right">Large Enterprise</div>
+                    <div class="axis-label y-label-bottom">Traditional / Manual</div>
+                    <div class="axis-label y-label-top">AI-Native / Autonomous</div>
+
+                    <!-- Company Positions -->
+                    <div class="company-dot dot-bond" title="Bond Treasury: Enterprise-focused, Agentic AI">
+                        <div>Bond<br>Treasury</div>
+                    </div>
+                    <div class="company-dot dot-atlar" title="Atlar: Mid-market/Enterprise, Augmented AI">
+                        <div>Atlar</div>
+                    </div>
+
+                    <!-- Reference Competitors (lighter) -->
+                    <div class="company-dot dot-kyriba" title="Kyriba: Traditional legacy system for enterprises">
+                        <div>Kyriba<br>(Legacy)</div>
+                    </div>
+                    <div class="company-dot dot-gtreasury" title="GTreasury: Traditional system for mid-market">
+                        <div>GTreasury<br>(Legacy)</div>
+                    </div>
+                    <div class="company-dot dot-trovata" title="Trovata: Analytics-focused">
+                        <div>Trovata<br>(Analytics)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem; padding: 1.5rem; background: #f8f9fa; border-radius: 8px;">
+                <h4 style="color: #001a4d; font-weight: 600; margin-bottom: 1rem;">Positioning Insights</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0; color: #0066ff; font-weight: 700;">▸</span> <strong>Bond Treasury (Upper Right):</strong> Positioned for the largest multinational enterprises. Strong emphasis on agentic AI, autonomous operations, and complex dealing room capabilities. Suitable for organizations with sophisticated treasury operations and the ability to handle longer implementations (6+ months).</li>
+                    <li style="margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0; color: #00cc88; font-weight: 700;">▸</span> <strong>Atlar (Upper-Middle):</strong> Positioned for fast-scaling mid-market and growing enterprises. Emphasizes rapid deployment (&lt;90 days), augmented intelligence, and transparent AI. Ideal for organizations prioritizing speed-to-value and data privacy.</li>
+                    <li style="margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative;"><span style="position: absolute; left: 0; color: #ff6b6b; font-weight: 700;">▸</span> <strong>Legacy Reference Points:</strong> Kyriba (enterprise, traditional), GTreasury (mid-market, traditional), and Trovata (analytics-focused) represent the older generation of treasury solutions, positioned lower on the AI-native dimension.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Strategic Implications -->
+        <section id="implications">
+            <h2 class="section-title">Strategic Implications</h2>
+
+            <div class="implications-grid">
+                <div class="implication-card">
+                    <h4>Bond Treasury Strengths</h4>
+                    <ul>
+                        <li><strong>Autonomous Operations:</strong> 24/7 autonomous agents handle complex treasury workflows without human oversight. Unique capability for enterprise risk management.</li>
+                        <li><strong>Deep Dealing Room:</strong> Comprehensive fixed-income, FX, repo, and reverse repo capabilities. Suitable for treasuries with active investment operations.</li>
+                        <li><strong>Enterprise Heritage:</strong> Backed by Goldman Sachs, Mastercard, and other financial institutions. Strong signal for enterprise adoption and regulatory credibility.</li>
+                        <li><strong>Stress Testing & Auto-Hedging:</strong> Autonomous stress testing and risk monitoring is claimed as a core differentiator vs. legacy systems and newer competitors.</li>
+                    </ul>
+                </div>
+
+                <div class="implication-card">
+                    <h4>Bond Treasury Weaknesses</h4>
+                    <ul>
+                        <li><strong>Limited Transparency:</strong> Minimal public evidence of AI claims, case studies, or technology disclosures. Difficult to validate autonomous capabilities in practice.</li>
+                        <li><strong>Privacy & Security Gaps:</strong> No disclosed ISO 27001 certification, DORA compliance, or clear privacy safeguards for AI-driven data usage.</li>
+                        <li><strong>Long Implementation Timelines:</strong> Typical 6+ month go-live for enterprise customers. Slower time-to-value than modern alternatives.</li>
+                        <li><strong>No G2 Validation:</strong> No third-party ratings or customer validation on independent review platforms. Limited peer benchmarking visibility.</li>
+                        <li><strong>Limited Developer API:</strong> Weak developer API suggests reduced extensibility and custom integration capabilities vs. modern platforms.</li>
+                    </ul>
+                </div>
+
+                <div class="implication-card">
+                    <h4>Atlar Strengths</h4>
+                    <ul>
+                        <li><strong>Rapid Implementation:</strong> &lt;90 day go-live is a massive competitive advantage. Fast time-to-value matters in competitive markets.</li>
+                        <li><strong>G2 Market Leadership:</strong> #1 rankings for usability, support quality, and likelihood to recommend (Spring 2025) provide independent third-party validation.</li>
+                        <li><strong>Transparent AI:</strong> Clear explanation of AI capabilities, privacy controls, and data handling. "Customer data never used for model training" is a major trust signal.</li>
+                        <li><strong>Strong Developer API:</strong> Robust API and strong integration capabilities enable custom workflows and extensibility.</li>
+                        <li><strong>Security Certifications:</strong> ISO 27001, GDPR, and DORA compliance demonstrate regulatory readiness and data protection commitment.</li>
+                        <li><strong>Startup Agility:</strong> Ex-Tink/Visa founding team brings deep fintech experience. Smaller organization likely more responsive to customer needs.</li>
+                    </ul>
+                </div>
+
+                <div class="implication-card">
+                    <h4>Atlar Weaknesses</h4>
+                    <ul>
+                        <li><strong>Lighter Dealing Capabilities:</strong> Weak fixed-income securities and FX products; no repo/reverse repo. Limited for treasuries with active dealing rooms.</li>
+                        <li><strong>Risk Management Gaps:</strong> Stress testing, scenario analysis, and FX risk management are weaker than Bond. Less suitable for complex risk hedging.</li>
+                        <li><strong>Earlier Stage:</strong> Only €5M seed funding (vs. $32M Series A for Bond). Less capitalized; higher execution risk.</li>
+                        <li><strong>Autonomous Operations Not Positioned:</strong> Atlar emphasizes augmented intelligence, not full autonomy. Some enterprises may prefer AI-driven autonomous treasury operations.</li>
+                        <li><strong>Scalability Questions:</strong> As a newer company, long-term scalability and roadmap sustainability are less proven than established alternatives.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Takeaways -->
+        <section id="takeaways">
+            <div class="takeaways">
+                <h3>Key Takeaways</h3>
+                <ul>
+                    <li><strong>Two Different AI Philosophies:</strong> Bond emphasizes autonomous, agentic AI that handles treasury operations 24/7 with minimal oversight. Atlar emphasizes augmented intelligence that accelerates human decision-making with transparent, privacy-preserving AI. Neither approach is universally "better"—the right choice depends on treasury maturity, risk tolerance, and organizational culture.</li>
+
+                    <li><strong>Positioning & Market Fit:</strong> Bond is optimized for large multinationals with complex treasury operations and longer implementation timelines. Atlar is optimized for fast-growing mid-market and enterprise organizations that prioritize rapid deployment, transparency, and ease of use. The 90-day vs. 6+ month go-live difference is material.</li>
+
+                    <li><strong>AI Credibility Gap:</strong> Bond's autonomous capabilities are compelling but lack public evidence, case studies, or third-party validation. Atlar's AI is less flashy but more transparent, privacy-conscious, and independently validated (G2 rankings). For risk-averse CFOs, Atlar's transparency may be more compelling than Bond's autonomous claims.</li>
+
+                    <li><strong>Handling Complexity:</strong> Bond is stronger for treasuries requiring sophisticated dealing rooms, stress testing, and autonomous risk management. Atlar is stronger for treasuries prioritizing cash management, reconciliation, forecasting, and rapid deployment. Neither platform is equally strong in both dimensions.</li>
+
+                    <li><strong>Enterprise Readiness:</strong> Atlar has achieved impressive #1 G2 rankings and is FCA/GDPR/DORA compliant. Bond has prestigious investors (Goldman Sachs, Mastercard) but lacks third-party validation or disclosed compliance certifications. For regulated enterprises, Atlar's demonstrated compliance and customer validation may reduce adoption risk.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Visual Product Gallery -->
+        <section id="gallery">
+            <h2 class="section-title">Visual Product Gallery</h2>
+            <p style="margin-bottom: 2rem; color: #666; font-size: 1.05rem;">
+                Live product screenshots captured from both platforms, showcasing the distinct visual design and user experience approaches of Bond Treasury and Atlar.
+            </p>
+
+            <!-- Bond Treasury Section -->
+            <div class="subsection-divider">
+                <h3>Bond Treasury</h3>
+                <p>Enterprise-focused screenshots showing AI-powered treasury management, dealing room, and autonomous capabilities</p>
+            </div>
+
+            <div class="gallery-grid">
+                <!-- Bond Card 1: Homepage Hero -->
+                <div class="gallery-card bond-card">
+                    <div class="gallery-image-wrapper">
+                        <div class="gallery-image-placeholder">
+                            <img src="https://assets.bondtreasury.com/images/bond-logo-image-invert.png" alt="Bond Treasury Logo">
+                            <div class="placeholder-text">AI Treasury Management Platform</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div class="gallery-card-title">Homepage Hero</div>
+                        <div class="gallery-card-description">Bond positions itself as 'The AI Treasury Management Platform' with enterprise-focused messaging and Book Demo CTA highlighting autonomous operations.</div>
+                        <a href="https://www.bondtreasury.com" class="gallery-card-link">View live →</a>
+                    </div>
+                </div>
+
+                <!-- Bond Card 2: AI Chat Interface & Dashboard -->
+                <div class="gallery-card bond-card">
+                    <div class="gallery-image-wrapper">
+                        <div class="gallery-image-placeholder">
+                            <div style="color: #00cc88; font-size: 2rem; margin-bottom: 0.5rem;">⚡</div>
+                            <div class="placeholder-text">AI Chat Interface & Real-time Dashboard</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div class="gallery-card-title">Conversational AI for Cash Pool Optimization</div>
+                        <div class="gallery-card-description">Bond's AI agent chat interface showing automated cash pool execution with a Slack-like conversation between the AI and treasury operators. Real-time balance dashboards showing €238M+ available balance alongside intercompany loan structures.</div>
+                        <a href="https://www.bondtreasury.com/platform/ai" class="gallery-card-link">View live →</a>
+                    </div>
+                </div>
+
+                <!-- Bond Card 3: AI Feature Tiles -->
+                <div class="gallery-card bond-card">
+                    <div class="gallery-image-wrapper">
+                        <div class="gallery-image-placeholder">
+                            <div style="color: #0066ff; font-size: 2rem; margin-bottom: 0.5rem;">◆</div>
+                            <div class="placeholder-text">IDE-Style Feature Tiles</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div class="gallery-card-title">AI-Powered Treasury Management Features</div>
+                        <div class="gallery-card-description">Three core AI pillars: Scoped Changes (@ mentions for precise automations), Deep Recall (treasury knowledge & rules), and Agentic Intelligent Workflows (autonomous agents for cash optimization). IDE-style interface with Approve/Reject controls.</div>
+                        <a href="https://www.bondtreasury.com/platform/ai" class="gallery-card-link">View live →</a>
+                    </div>
+                </div>
+
+                <!-- Bond Card 4: Agentic Automation Cards -->
+                <div class="gallery-card bond-card">
+                    <div class="gallery-image-wrapper">
+                        <div class="gallery-image-placeholder">
+                            <div style="color: #00cc88; font-size: 2rem; margin-bottom: 0.5rem;">◆</div>
+                            <div class="placeholder-text">Risk Monitoring & Auto-Hedging</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div class="gallery-card-title">Autonomous Risk Monitoring & Auto-Hedging</div>
+                        <div class="gallery-card-description">Bond's agentic AI cards showing: Status Monitoring with EUR/USD exposure alerts ($4.7M, 92% of limit), Liquidity Optimization suggesting pre-funding strategies, and FX Hedging with forward contracts achieving 78% risk reduction outcomes.</div>
+                        <a href="https://www.bondtreasury.com/platform/ai" class="gallery-card-link">View live →</a>
+                    </div>
+                </div>
+
+                <!-- Bond Card 5: Dealing Room -->
+                <div class="gallery-card bond-card">
+                    <div class="gallery-image-wrapper">
+                        <div class="gallery-image-placeholder">
+                            <div style="color: #0066ff; font-size: 2rem; margin-bottom: 0.5rem;">💼</div>
+                            <div class="placeholder-text">Dealing Room</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div class="gallery-card-title">Seamless Treasury Execution</div>
+                        <div class="gallery-card-description">Full dealing room with instrument list including BlackRock ICS US Treasury Liquidity Fund (5.12% yield), Goldman Sachs Euro Liquidity Fund (3.05%), HSBC Sterling Fund (4.12%), and Repo/Reverse Repo agreements across USD, EUR, GBP.</div>
+                        <a href="https://www.bondtreasury.com/products/dealing-room" class="gallery-card-link">View live →</a>
+                    </div>
+                </div>
+
+                <!-- Bond Card 6: Product Feature Grid -->
+                <div class="gallery-card bond-card">
+                    <div class="gallery-image-wrapper">
+                        <div class="gallery-image-placeholder">
+                            <div style="color: #00cc88; font-size: 2rem; margin-bottom: 0.5rem;">▣</div>
+                            <div class="placeholder-text">Product Feature Grid</div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div class="gallery-card-title">Smart Treasury Management Suite</div>
+                        <div class="gallery-card-description">Complete product overview: AI Intelligence, Balance Sheet Headquarters, Payments, Liquidity Management, Forecasting, Dealing Room with allocation charts, Risk Management, and Ledgers. Enterprise-grade counterparty integration.</div>
+                        <a href="https://www.bondtreasury.com" class="gallery-card-link">View live →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Atlar Section -->
+            <div class="subsection-divider">
+                <h3>Atlar</h3>
+                <p>Mid-market focused screenshots showing modern dashboard, AI Intelligence, and transparent workflows</p>
+            </div>
+
+            <div class="gallery-grid">
+                <!-- Atlar Card 1: Homepage & Dashboard -->
+                <div class="gallery-card atlar-card">
+                    <div class="gallery-image-wrapper">
+                        <img src="https://cdn.prod.website-files.com/656f3c6489ea21aff4dfcf78/692571712cc755c88534f173_atlar-treasury-meta-comp.png" alt="Atlar Dashboard">
+                    </div>
+                    <div class="gallery-card-content">
+                        <div class="gallery-card-title">Homepage & Dashboard</div>
+                        <div class="gallery-card-description">Atlar's modern dashboard showing real-time cash positions (€32.2M), multi-currency breakdowns, cash position by entity charts, approval workflows, and G2 4.9-star rating with SOC 2 + ISO 27001 compliance badges.</div>
+                        <a href="https://www.atlar.com" class="gallery-card-link">View live →</a>
+                    </div>
+                </div>
+
+                <!-- Atlar Card 2: AI Assistant -->
+                <div class="gallery-card atlar-card">
+                    <div class="gallery-image-wrapper">
+                        <img src="https://cdn.prod.website-files.com/656f3c6489ea21aff4dfcf78/68f0aae79c6fb120f24b49e0_1920x1080%20(1).png" alt="Atlar Intelligence AI Assistant">
+                    </div>
+                    <div class="gallery-card-content">
+                        <div class="gallery-card-title">Atlar Intelligence — AI Assistant</div>
+                        <div class="gallery-card-description">Conversational AI generating a Cash Flow Bridge (May-October 2025) showing opening balance €28.1M, monthly net changes, and closing balance €30.4M — all from a simple natural language query.</div>
+                        <a href="https://www.atlar.com/intelligence" class="gallery-card-link">View live →</a>
+                    </div>
+                </div>
+
+                <!-- Atlar Card 3: Real-time Answers -->
+                <div class="gallery-card atlar-card">
+                    <div class="gallery-image-wrapper">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #e8e4f5 0%, #f0ebf7 100%); display: flex; align-items: center; justify-content: center;">
+                            <div style="text-align: center; color: #6C5CE7;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">💬</div>
+                                <div style="font-size: 0.9rem; font-weight: 500;">Ask Atlar Conversations</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div class="gallery-card-title">Atlar Intelligence — Real-time Answers</div>
+                        <div class="gallery-card-description">Credit transfers dashboard with the 'Ask Atlar' conversational AI panel. Instantly query balances, flows, and transactions to uncover drivers, compare entities, or spot emerging trends without spreadsheets.</div>
+                        <a href="https://www.atlar.com/intelligence" class="gallery-card-link">View live →</a>
+                    </div>
+                </div>
+
+                <!-- Atlar Card 4: Cash Forecasting -->
+                <div class="gallery-card atlar-card">
+                    <div class="gallery-image-wrapper">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #e8e4f5 0%, #f0ebf7 100%); display: flex; align-items: center; justify-content: center;">
+                            <div style="text-align: center; color: #6C5CE7;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+                                <div style="font-size: 0.9rem; font-weight: 500;">ML Forecasting</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div class="gallery-card-title">Adaptive Cash Forecasting</div>
+                        <div class="gallery-card-description">Generated forecast using historical data with configurable methods, percentage changes (12%), and category-level forecasting. AI analyzes balances, inflows, and outflows to anticipate liquidity needs with multiple ML methods.</div>
+                        <a href="https://www.atlar.com/intelligence" class="gallery-card-link">View live →</a>
+                    </div>
+                </div>
+
+                <!-- Atlar Card 5: Bank Reconciliation -->
+                <div class="gallery-card atlar-card">
+                    <div class="gallery-image-wrapper">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #e8e4f5 0%, #f0ebf7 100%); display: flex; align-items: center; justify-content: center;">
+                            <div style="text-align: center; color: #6C5CE7;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">✓</div>
+                                <div style="font-size: 0.9rem; font-weight: 500;">AI Reconciliation</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div class="gallery-card-title">AI Bank Reconciliation</div>
+                        <div class="gallery-card-description">AP/AR reconciliation with AI Suggestion matching showing automated transaction pairing (incoming transfers matched to Stripe payments), verification status, and journal creation across all banks and entities.</div>
+                        <a href="https://www.atlar.com/products/bank-reconciliation" class="gallery-card-link">View live →</a>
+                    </div>
+                </div>
+
+                <!-- Atlar Card 6: Payments Platform -->
+                <div class="gallery-card atlar-card">
+                    <div class="gallery-image-wrapper">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #e8e4f5 0%, #f0ebf7 100%); display: flex; align-items: center; justify-content: center;">
+                            <div style="text-align: center; color: #6C5CE7;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">💳</div>
+                                <div style="font-size: 0.9rem; font-weight: 500;">Payments</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div class="gallery-card-title">Centralize & Automate Bank Payments Globally</div>
+                        <div class="gallery-card-description">Credit transfers management with external/internal transfer types, multi-bank account selection (Citi Corporate EUR), counterparty management, and ERP-synced payment execution — no file transfers or banking portals needed.</div>
+                        <a href="https://www.atlar.com/products/payments" class="gallery-card-link">View live →</a>
+                    </div>
+                </div>
+
+                <!-- Atlar Card 7: Effortless Reporting -->
+                <div class="gallery-card atlar-card">
+                    <div class="gallery-image-wrapper">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #e8e4f5 0%, #f0ebf7 100%); display: flex; align-items: center; justify-content: center;">
+                            <div style="text-align: center; color: #6C5CE7;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">📈</div>
+                                <div style="font-size: 0.9rem; font-weight: 500;">AI Reports</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div class="gallery-card-title">Effortless Reporting</div>
+                        <div class="gallery-card-description">Available Balance report across banking partners (Alpha FX, Banco Santander, Barclays, Citi, DNB, Goldman Sachs, Morgan Stanley) with EUR balances and date-range filtering. AI applies visualizations automatically.</div>
+                        <a href="https://www.atlar.com/intelligence" class="gallery-card-link">View live →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Competitive Analysis: Bond Treasury vs Atlar | AI-Native Treasury Management Platforms</p>
+        <p style="margin-top: 0.5rem; opacity: 0.8;">Last Updated: February 2026 | This analysis reflects publicly available information as of the publication date</p>
+    </div>
+</body>
+</html>
